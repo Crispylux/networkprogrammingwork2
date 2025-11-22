@@ -57,7 +57,7 @@ def load_test_data(folder_path):
     X = np.array(X)
     return X, filenames
 
-# # Load training and testing data
+# Load training and testing data
 train_folder = r"C:\Users\AMD\PycharmProjects\PythonProject1\data\archive\train"
 test_folder = r"C:\Users\AMD\PycharmProjects\PythonProject1\data\archive\test"
 X_train, y_train, class_names = load_train_data(train_folder)
@@ -66,29 +66,24 @@ X_test, test_filenames = load_test_data(test_folder)
 # Split the data
 X_train, X_test, y_train, y_test = train_test_split(X_train, y_train, test_size=0.2, random_state=42)
 
-# Normalize values
-X_train = preprocess_input(X_train.copy())
-X_test = preprocess_input(X_test.copy())
 
 print("X_train_split.shape:", X_train.shape)
 print("y_train_split.shape:", y_train.shape)
 print("X_test_split.shape:", X_test.shape)
 print("y_test_split.shape:", y_test.shape)
 
-import cv2
-
 plt.figure(figsize=(10, 2))
 for i in range(5):
     plt.subplot(1, 5, i + 1)
-    temp_img = (X_train[i] + 1) * 127.5
-    temp_img = temp_img.astype(np.uint8)
-
-    rgb_img = cv2.cvtColor(temp_img, cv2.COLOR_BGR2RGB)
-
-    plt.imshow(rgb_img)
+    plt.imshow(X_train[i].astype(np.uint8))
     plt.title(class_names[y_train[i]])
     plt.axis('off')
 plt.show()
+
+# Normalize values
+#*전처리(사전학습 등)를 나중에 해야 위의 plt.show()로 출력한 이미지가 깨지지 않는다!!*
+X_train = preprocess_input(X_train.copy())
+X_test = preprocess_input(X_test.copy())
 
 #X_train.astype(np.float32)/255.0
 #X_test=X_test.astype(np.float32)/255.0
